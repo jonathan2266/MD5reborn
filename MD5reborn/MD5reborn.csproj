@@ -43,11 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display\IDisplay.cs" />
+    <Compile Include="format\Format.cs" />
+    <Compile Include="format\FormatSingleLine.cs" />
+    <Compile Include="format\IFormat.cs" />
+    <Compile Include="hash\Hash.cs" />
+    <Compile Include="hash\HashMD5.cs" />
+    <Compile Include="hash\IHash.cs" />
+    <Compile Include="logger\FileLogger.cs" />
+    <Compile Include="logger\Ilogger.cs" />
+    <Compile Include="logger\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="programPath.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Terminal\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
