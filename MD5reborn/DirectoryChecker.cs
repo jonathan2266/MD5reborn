@@ -20,30 +20,32 @@ namespace MD5reborn
             this.logger = logger;
         }
 
-        public List<string> GetUnFinsished()
+        public void GetUnFinsished(out folderState state, out List<string> unfinished)
         {
-            List<string> unfinished = new List<string>();
+            state = folderState.finished;
             string[] temp;
+            List<string> unfList = new List<string>();
             try
             {
                 temp = Directory.GetFiles(dir);
+
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    string temp2 = Path.GetFileName(temp[i]);
+
+                    if (temp2.Contains(unfinishedTag))
+                    {
+                        state = folderState.unfinished;
+                        unfList.Add(temp[i]);
+                    }
+                }
             }
             catch (Exception)
             {
                 //log stuff
                 Environment.Exit(1);
             }
-            for (int i = 0; i < temp.Length; i++)
-            {
-                string temp2 = Path.GetFileName(temp[i]);
-                
-                if (temp[i].Contains(unfinishedTag))
-                {
-                    unfinished.Add(temp[i]);
-                }
-            }
-
-            return unfinished;
+            unfinished = unfList;
         }
     }
 }

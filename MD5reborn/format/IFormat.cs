@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MD5reborn.format
 {
-    interface IFormat
+    public interface IFormat
     {
     }
 }

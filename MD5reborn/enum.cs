@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MD5reborn.Display
+namespace MD5reborn
 {
-    public class DisplayLocalConsole : Display
+    public enum folderState
     {
+        unfinished,
+        finished
     }
 }

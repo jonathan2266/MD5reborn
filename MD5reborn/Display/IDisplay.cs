@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MD5reborn.Display
 {
-    class IDisplay
+    public interface IDisplay
     {
     }
 }
