@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MD5reborn
+namespace MD5reborn.DataChecker
 {
-    public enum folderState
+    public interface IDataChecker
     {
-        unfinished,
-        finished,
-        none
+
     }
 }

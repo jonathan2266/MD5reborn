@@ -8,5 +8,7 @@ namespace MD5reborn.logger
 {
     public interface Ilogger
     {
+        void log(string text);
+        void stopLogging();
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace MD5reborn.logger
 {
-    public class Logger : Ilogger
+    abstract public class Logger : Ilogger
     {
+        protected bool isFunctional;
+        protected ConcurrentQueue<string> writeBuffer = new ConcurrentQueue<string>();
+
+        public abstract void log(string text);
+
+        public abstract void stopLogging();
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
 using MD5reborn.format;
+using MD5reborn.dataSaver;
+using MD5reborn.DataChecker;
 
 namespace MD5reborn
 {
@@ -17,26 +19,35 @@ namespace MD5reborn
 
             //initial vars
             string fileUnfinishedTag = "unf";
+            string logFileName = "MD5rebornLogs";
 
             //initial classes
-            Logger logger = new FileLogger();
-            Format format = new FormatSingleLine();
+            Logger logger = new FileLogger(logFileName);
+            logSystemInfo(logger);
+
+            Format format = new FormatSingleLine(logger);
 
             //dirCheck
-            DirectoryChecker dirCheck = new DirectoryChecker(directory, fileUnfinishedTag, logger);
+            DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, directory, fileUnfinishedTag);
+            DataSaver dataSaver = new DataSaverLocalHDD(logger, directory, fileUnfinishedTag);
 
             folderState state;
-            List<string> unfinished = new List<string>();
+            List<string> files = new List<string>();
 
-            dirCheck.GetUnFinsished(out state, out unfinished);
+            dataSaver.GetStatus(out state, out files);
+            dataChecker.GetStatus(out state, out files);
 
             if (state == folderState.unfinished)
             {
 
             }
-            else
+            else if (state == folderState.finished)
             {
 
+            }
+            else
+            {
+                
             }
 
             //startAguments dir
@@ -51,6 +62,12 @@ namespace MD5reborn
             //fire up diffrent thread for console commands
 
             //fire up extra thread for displaying data
+        }
+
+        private static void logSystemInfo(Ilogger logger)
+        {
+            logger.log("OS: " + Environment.OSVersion);
+            logger.log("Cores: " + Environment.ProcessorCount);
         }
     }
 }

@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
-using MD5reborn.format;
 
-namespace MD5reborn.format
+namespace MD5reborn.DataChecker
 {
-    public abstract class Format : IFormat
+    public abstract class DataChecker : IDataChecker
     {
         protected Ilogger logger;
-        public Format(Ilogger logger)
+        public DataChecker(Ilogger logger)
         {
             this.logger = logger;
         }
-
-        public abstract string ParseToFormat(string text, string hash);
+        public abstract void GetStatus(out folderState state, out List<string> files);
     }
 }

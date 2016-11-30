@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace MD5reborn
 {
-    public enum folderState
+    public class WordGenerator
     {
-        unfinished,
-        finished,
-        none
     }
 }

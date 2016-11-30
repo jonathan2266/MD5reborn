@@ -43,7 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryChecker.cs" />
+    <Compile Include="DataChecker\DataChecker.cs" />
+    <Compile Include="DataChecker\DataCheckerLocalHDD.cs" />
+    <Compile Include="DataChecker\IDataChecker.cs" />
+    <Compile Include="dataSaver\DataSaver.cs" />
+    <Compile Include="dataSaver\DataSaverLocalHDD.cs" />
+    <Compile Include="dataSaver\IDataSaver.cs" />
     <Compile Include="Display\Display.cs" />
     <Compile Include="Display\DisplayLocalConsole.cs" />
     <Compile Include="Display\IDisplay.cs" />
@@ -64,6 +69,7 @@
     <Compile Include="Terminal\Terminal.cs" />
     <Compile Include="Terminal\TerminalLocalScreen.cs" />
     <Compile Include="ThreadManager.cs" />
+    <Compile Include="WordGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
