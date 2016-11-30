@@ -20,6 +20,7 @@ namespace MD5reborn
             //initial vars
             string fileUnfinishedTag = "unf";
             string logFileName = "MD5rebornLogs";
+            int flushTimer = 50;
 
             //initial classes
             Logger logger = new FileLogger(logFileName);
@@ -29,25 +30,23 @@ namespace MD5reborn
 
             //dirCheck
             DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, directory, fileUnfinishedTag);
-            DataSaver dataSaver = new DataSaverLocalHDD(logger, directory, fileUnfinishedTag);
 
             folderState state;
             List<string> files = new List<string>();
 
-            dataSaver.GetStatus(out state, out files);
             dataChecker.GetStatus(out state, out files);
 
             if (state == folderState.unfinished)
             {
-
+                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag, files);
             }
             else if (state == folderState.finished)
             {
-
+                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag, files[0]);
             }
-            else
+            else //state.none
             {
-                
+                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag);
             }
 
             //startAguments dir

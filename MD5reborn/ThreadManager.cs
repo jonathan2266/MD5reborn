@@ -10,25 +10,39 @@ namespace MD5reborn
 {
     public class ThreadManager
     {
+        private string echo = "Threadmanager created";
         private Ilogger logger;
+        private IFormat format;
         private string dir;
-        private string programTag;
         private string fileUnFinishedTag;
+        private string finishedFilePath;
+        private List<string> unfinishedList;
 
-        public ThreadManager(Ilogger logger, IFormat format, string dir, string programTag, string fileUnFinishedTag)
+        public ThreadManager(Ilogger logger, IFormat format, string dir, string fileUnFinishedTag)
         {
+            logger.log(echo);
             this.logger = logger;
+            this.format = format;
             this.dir = dir;
-            this.programTag = programTag;
             this.fileUnFinishedTag = fileUnFinishedTag;
         }
-        public void FinishRemainingFiles(List<string> unfinished)
+        public ThreadManager(Ilogger logger, IFormat format, string dir, string fileUnFinishedTag, string finishedFilePath)
         {
-
+            logger.log(echo);
+            this.logger = logger;
+            this.format = format;
+            this.dir = dir;
+            this.fileUnFinishedTag = fileUnFinishedTag;
+            this.finishedFilePath = finishedFilePath;
         }
-        public void StartFromCompleteFile()
+        public ThreadManager(Ilogger logger, IFormat format, string dir, string fileUnFinishedTag, List<string> unfinishedList)
         {
-
+            logger.log(echo);
+            this.logger = logger;
+            this.format = format;
+            this.dir = dir;
+            this.fileUnFinishedTag = fileUnFinishedTag;
+            this.unfinishedList = unfinishedList;
         }
     }
 }
