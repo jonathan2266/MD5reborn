@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MD5reborn.Terminal
+namespace MD5reborn.terminal
 {
-    public class Terminal
+    public abstract class Terminal : ITerminal
     {
+        public abstract string Read();
+
+        public abstract void Write();
     }
 }

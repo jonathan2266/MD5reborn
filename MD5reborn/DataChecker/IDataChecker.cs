@@ -8,6 +8,7 @@ namespace MD5reborn.DataChecker
 {
     public interface IDataChecker
     {
-
+        void GetStatus(out folderState state, out List<string> files);
+        void GetLastWordOfFileInfo(string fileDir, out int lineNumber, out string word);
     }
 }

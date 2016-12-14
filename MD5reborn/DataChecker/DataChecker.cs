@@ -14,6 +14,8 @@ namespace MD5reborn.DataChecker
         {
             this.logger = logger;
         }
+
+        public abstract void GetLastWordOfFileInfo(string fileDir, out int lineNumber, out string word);
         public abstract void GetStatus(out folderState state, out List<string> files);
     }
 }

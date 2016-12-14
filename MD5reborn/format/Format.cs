@@ -16,6 +16,8 @@ namespace MD5reborn.format
             this.logger = logger;
         }
 
+        public abstract string GetHash(string fileLine);
+        public abstract string GetWord(string fileLine);
         public abstract string ParseToFormat(string text, string hash);
     }
 }

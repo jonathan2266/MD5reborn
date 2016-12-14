@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
+using MD5reborn.format;
 using System.IO;
 using System.Threading;
 
@@ -14,13 +15,15 @@ namespace MD5reborn.DataChecker
         private string echo = "DataCheckerLocalHDD created";
         private string unfinishedTag;
         private string directory;
-        public DataCheckerLocalHDD(Ilogger logger, string directory, string unfinishedTag) : base(logger)
+        private IFormat format;
+        public DataCheckerLocalHDD(Ilogger logger, IFormat format, string directory, string unfinishedTag) : base(logger)
         {
             logger.log(echo);
             this.directory = directory;
             this.unfinishedTag = unfinishedTag;
+            this.format = format;
         }
-        public override void GetStatus(out folderState state, out List<string> files)
+        public override void GetStatus(out folderState state, out List<string> files) 
         {
             state = folderState.finished;
             string[] temp = new string[1];
@@ -91,6 +94,48 @@ namespace MD5reborn.DataChecker
             ret.Add(temp[biggest]);
 
             return ret;
+        }
+
+        public override void GetLastWordOfFileInfo(string fileDir, out int lineNumber, out string word) //add asycn option? :) //wrong need to be in formatter class
+        {
+            StreamReader reader;
+            string read = "";
+            int iterations = 0;
+
+            try
+            {
+                reader = new StreamReader(fileDir);
+                string temp;
+                while (true)
+                {
+                    temp = reader.ReadLine();
+                    if (temp != null)
+                    {
+                        read = temp;
+                        iterations++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (read == "")
+                {
+                    throw new Exception("The file contents returned \"\"");
+                }
+            }
+            catch (Exception e)
+            {
+                logger.log("fatal in DataCheckerLocalHDD " + e.Data);
+                logger.stopLogging();
+                Thread.Sleep(500);
+                Environment.Exit(1);
+            }
+
+            word = format.GetWord(read);
+            lineNumber = iterations;
+            
         }
     }
 }

@@ -7,6 +7,7 @@ using MD5reborn.logger;
 using MD5reborn.format;
 using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
+using MD5reborn.terminal;
 
 namespace MD5reborn
 {
@@ -27,9 +28,12 @@ namespace MD5reborn
             logSystemInfo(logger);
 
             Format format = new FormatSingleLine(logger);
+            Terminal terminal = new TerminalLocalScreen();
 
             //dirCheck
             DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, directory, fileUnfinishedTag);
+            //dirSaver
+            DataSaver DSaver = new DataSaverLocalHDD(logger, format, directory, fileUnfinishedTag, flushTimer);
 
             folderState state;
             List<string> files = new List<string>();
@@ -38,15 +42,15 @@ namespace MD5reborn
 
             if (state == folderState.unfinished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag, files);
+                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag, files);
             }
             else if (state == folderState.finished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag, files[0]);
+                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag, files[0]);
             }
             else //state.none
             {
-                ThreadManager tManager = new ThreadManager(logger, format, directory, fileUnfinishedTag);
+                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag);
             }
 
             //startAguments dir

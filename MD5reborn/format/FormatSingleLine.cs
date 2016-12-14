@@ -15,6 +15,16 @@ namespace MD5reborn.format
             logger.log(echo);
         }
 
+        public override string GetHash(string fileLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetWord(string fileLine)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ParseToFormat(string text, string hash)
         {
             string formatted;

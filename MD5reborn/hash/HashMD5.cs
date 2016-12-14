@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MD5reborn.hash
 {
-    public class HashMD5 : Hash
+    public class HashMD5 : Hasher
     {
+        public override string Hash(string text)
+        {
+            byte[] tmpscrc = ASCIIEncoding.ASCII.GetBytes(text);
+            byte[] hash = new MD5CryptoServiceProvider().ComputeHash(tmpscrc);
+            return formatSolution(hash);
+        }
     }
 }
