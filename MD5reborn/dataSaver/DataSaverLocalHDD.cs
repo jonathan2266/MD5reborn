@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using MD5reborn.logger;
-using MD5reborn.format;
 using System.Threading;
 
 namespace MD5reborn.dataSaver
@@ -13,7 +12,7 @@ namespace MD5reborn.dataSaver
         private string directory;
         private StreamWriter writer;
         private string filename;
-        public DataSaverLocalHDD(Ilogger logger,IFormat format, string directory, string filename, string unfinishedTag) : base(logger, format)
+        public DataSaverLocalHDD(Ilogger logger, string directory, string filename, string unfinishedTag) : base(logger)
         {
             this.logger.log(echo);
             this.directory = directory;
@@ -26,7 +25,7 @@ namespace MD5reborn.dataSaver
         {
             try
             {
-                writer.Write(format.ParseToFormat(text, hash));
+                writer.Write(text + Environment.NewLine + hash + Environment.NewLine);
             }
             catch (Exception e)
             {

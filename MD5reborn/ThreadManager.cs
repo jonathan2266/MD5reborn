@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
-using MD5reborn.format;
 using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using System.Threading;
@@ -17,7 +16,6 @@ namespace MD5reborn
     {
         private string echo = "Threadmanager created";
         private Ilogger logger;
-        private IFormat format;
         private IDataChecker dChecker;
         private string dir;
         private string fileUnFinishedTag;
@@ -32,11 +30,10 @@ namespace MD5reborn
         private int nrOfGroupedHashes;
         private folderState state;
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag) //state.none
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag) //state.none
         {
             logger.log(echo); //new start
             this.logger = logger;
-            this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
             this.dChecker = dChecker;
@@ -47,11 +44,10 @@ namespace MD5reborn
             currentWord = "";
 
         }
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath) //folderState.finished
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath) //folderState.finished
         {
             logger.log(echo); //start from last
             this.logger = logger;
-            this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
             this.finishedFilePath = finishedFilePath;
@@ -64,11 +60,10 @@ namespace MD5reborn
 
         }
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, List<string> unfinishedList) //folderState.unfinished
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, List<string> unfinishedList) //folderState.unfinished
         {
             logger.log(echo); //finish of last
             this.logger = logger;
-            this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
             this.unfinishedList = unfinishedList;
@@ -109,7 +104,7 @@ namespace MD5reborn
                     {
                         //new job and start
                         currentFileNr++;
-                        saver[i] = new DataSaverLocalHDD(logger, format, dir, currentFileNr + ".txt", fileUnFinishedTag);
+                        saver[i] = new DataSaverLocalHDD(logger, dir, currentFileNr + ".txt", fileUnFinishedTag);
                         workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i]));
                         workers[i].Start();
                         isDone[i] = false;
