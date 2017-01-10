@@ -12,4 +12,9 @@ namespace MD5reborn
         finished,
         none
     }
+    public enum HashType
+    {
+        MD5,
+        SHA256
+    }
 }

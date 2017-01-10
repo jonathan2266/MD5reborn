@@ -8,6 +8,7 @@ using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using MD5reborn.terminal;
 using System.Threading;
+using MD5reborn.hash;
 
 namespace MD5reborn
 {
@@ -16,9 +17,31 @@ namespace MD5reborn
         static ThreadManager tManager;
         static void Main(string[] args)
         {
-            //arg
+            //args
+            //Dir
             string directory = args[0];
+            #region //hash
+            IHash hash = new HashMD5();
+            try
+            {
+                HashType hashType = (HashType)Enum.Parse(typeof(HashType), args[1], true);
+                if (hashType == HashType.MD5)
+                {
+                    hash = new HashMD5();
+                }
+                if (hashType == HashType.SHA256)
+                {
+                    hash = new HashSHA256();
+                }
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error parsing second command line argument Fill in one of these: " + HashType.MD5.ToString() + " " + HashType.SHA256 + " "  + e);
+                Console.ReadLine();
+                Environment.Exit(1);
+            }
+            #endregion
             //initial vars
             string fileUnfinishedTag = "unf";
             string logFileName = "MD5rebornLogs";
@@ -37,17 +60,13 @@ namespace MD5reborn
 
             dataChecker.GetStatus(out state, out files);
 
-            if (state == folderState.unfinished)
+            if (state == folderState.finished)
             {
-                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, files);
-            }
-            else if (state == folderState.finished)
-            {
-                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, files[0]);
+                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, files[0], hash);
             }
             else //state.none
             {
-                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag);
+                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, hash);
             }
 
             //startAguments dir
