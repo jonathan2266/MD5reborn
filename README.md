@@ -9,8 +9,10 @@ Should be compatible with any hashin algoritm.
 * When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash (currently MD5 only)
 * When the program is restarted it can pick up at the word it last hashed
 * Different hashing algorithms
+* Currently this program works in linux mono. Be carefull that line endings are diffrent so windows created files are not compatible.
 
 ## Future features
+* Windows linux compatible add options to choose line ending.
 * More command line options: So you can choose ToDisk format (example: instead of writing to a file you write directly to a database).
 * Load balancing: Give up multiple destinations for your data. Writing from 16 Threads to one Hardrive might be a problem.
 * Performance tweaks: In the ToDisk section Also when this project is completed a c++ port could potentially speed up everything.
