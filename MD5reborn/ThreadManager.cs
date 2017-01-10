@@ -91,7 +91,7 @@ namespace MD5reborn
             workers = new Thread[Environment.ProcessorCount];
 
             saver = new IDataSaver[Environment.ProcessorCount];
-            if (state == folderState.none)
+            if (state == folderState.none || state == folderState.finished)
             {
                 for (int i = 0; i < Environment.ProcessorCount; i++)
                 {
@@ -114,6 +114,7 @@ namespace MD5reborn
                         workers[i].Start();
                         isDone[i] = false;
 
+                        logger.log(DateTime.Now + "::Finding next job");
                         WordGenerator w = new WordGenerator(currentWord);
                         //create new currentword with Wordjumper
                         for (int j = 0; j < nrOfGroupedHashes; j++) //temp cuz wordjumper no ready
@@ -121,6 +122,7 @@ namespace MD5reborn
                             w.Next();
                         }
                         currentWord = w.GetCurrentWord();
+                        logger.log(DateTime.Now + "::Next job found");
                     }
                 }
                 Thread.Sleep(1);
@@ -129,6 +131,7 @@ namespace MD5reborn
 
         private void hashing(int threadID, string startWord, int lenght, IDataSaver saver)
         {
+            logger.log(DateTime.Now + "::Thread with ID: " + threadID + " started");
             IHash hash = new HashMD5();
             WordGenerator wGen = new WordGenerator(startWord);
 
@@ -140,6 +143,7 @@ namespace MD5reborn
 
             saver.Finish();
             isDone[threadID] = true;
+            logger.log(DateTime.Now + "::Thread with ID: " + threadID + " completed");
         }
     }
 }

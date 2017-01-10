@@ -8,7 +8,7 @@ using MD5reborn.format;
 
 namespace MD5reborn.format
 {
-    public abstract class Format : IFormat
+    public abstract class Format : IFormat, IDisposable
     {
         protected Ilogger logger;
         public Format(Ilogger logger)
@@ -16,6 +16,7 @@ namespace MD5reborn.format
             this.logger = logger;
         }
 
+        public abstract void Dispose();
         public abstract string GetHash(string fileLine);
         public abstract string GetWord(string fileLine);
         public abstract string ParseToFormat(string text, string hash);

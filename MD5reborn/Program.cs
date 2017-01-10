@@ -33,8 +33,6 @@ namespace MD5reborn
 
             //dirCheck
             DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, format, directory, fileUnfinishedTag);
-            //dirSaver
-            //DataSaver DSaver = new DataSaverLocalHDD(logger, format, directory, "lol", fileUnfinishedTag, flushTimer);
 
             folderState state;
             List<string> files = new List<string>();
@@ -67,13 +65,6 @@ namespace MD5reborn
 
             //fire up extra thread for displaying data
             tManager.Start();
-
-            Console.WriteLine(":D");
-
-            while (true)
-            {
-                Thread.Sleep(1000);
-            }
         }
 
         private static void logSystemInfo(Ilogger logger)

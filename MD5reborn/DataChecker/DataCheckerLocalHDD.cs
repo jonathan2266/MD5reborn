@@ -72,8 +72,7 @@ namespace MD5reborn.DataChecker
 
             for (int i = 0; i < temp.Length; i++)
             {
-                local[i] = Path.GetFileName(temp[i]);
-                local[i] = local[i].Remove(local.Length - 5, local.Length - 1);
+                local[i] = Path.GetFileNameWithoutExtension(temp[i]);
 
                 try
                 {
@@ -91,7 +90,7 @@ namespace MD5reborn.DataChecker
                 }
             }
 
-            if (temp.Length < 0)
+            if (temp.Length > 0)
             {
                 ret.Add(temp[biggest]);
             }

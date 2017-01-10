@@ -15,6 +15,11 @@ namespace MD5reborn.format
             logger.log(echo);
         }
 
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string GetHash(string fileLine)
         {
             throw new NotImplementedException();
