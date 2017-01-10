@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
-using MD5reborn.format;
 using System.IO;
 using System.Threading;
 
@@ -15,13 +14,11 @@ namespace MD5reborn.DataChecker
         private string echo = "DataCheckerLocalHDD created";
         private string unfinishedTag;
         private string directory;
-        private IFormat format;
-        public DataCheckerLocalHDD(Ilogger logger, IFormat format, string directory, string unfinishedTag) : base(logger)
+        public DataCheckerLocalHDD(Ilogger logger, string directory, string unfinishedTag) : base(logger)
         {
             logger.log(echo);
             this.directory = directory;
             this.unfinishedTag = unfinishedTag;
-            this.format = format;
         }
         public override void GetStatus(out folderState state, out List<string> files) 
         {
@@ -38,15 +35,24 @@ namespace MD5reborn.DataChecker
                     state = folderState.none;
                 }
                 //test for unfinished state
+                int countNonUnf = 0;
                 for (int i = 0; i < temp.Length; i++)
                 {
                     string temp2 = Path.GetFileName(temp[i]);
 
                     if (temp2.Contains(unfinishedTag))
                     {
-                        state = folderState.unfinished;
-                        unfList.Add(temp[i]);
+                        File.Delete(temp[i]);
                     }
+                    else
+                    {
+                        countNonUnf++;
+                    }
+                }
+                if (countNonUnf > 0)
+                {
+                    state = folderState.finished;
+                    temp = Directory.GetFiles(directory);
                 }
             }
             catch (Exception e)
@@ -103,6 +109,7 @@ namespace MD5reborn.DataChecker
             StreamReader reader;
             string read = "";
             int iterations = 0;
+            bool isEven = true;
 
             try
             {
@@ -111,20 +118,23 @@ namespace MD5reborn.DataChecker
                 while (true)
                 {
                     temp = reader.ReadLine();
+                    if (temp == "")
+                    {
+                        break;
+                    }
                     if (temp != null)
                     {
-                        read = temp;
+                        if (isEven)
+                        {
+                            read = temp;
+                        }
+                        isEven = !isEven;
                         iterations++;
                     }
                     else
                     {
                         break;
                     }
-                }
-
-                if (read == "")
-                {
-                    throw new Exception("The file contents returned \"\"");
                 }
             }
             catch (Exception e)
@@ -135,9 +145,8 @@ namespace MD5reborn.DataChecker
                 Environment.Exit(1);
             }
 
-            word = format.GetWord(read);
+            word = read;
             lineNumber = iterations;
-            
         }
     }
 }

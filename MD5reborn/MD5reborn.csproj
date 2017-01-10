@@ -69,9 +69,6 @@
     <Compile Include="Display\DisplayLocalConsole.cs" />
     <Compile Include="Display\IDisplay.cs" />
     <Compile Include="enum.cs" />
-    <Compile Include="format\Format.cs" />
-    <Compile Include="format\FormatSingleLine.cs" />
-    <Compile Include="format\IFormat.cs" />
     <Compile Include="HashContentChecker.cs" />
     <Compile Include="hash\Hasher.cs" />
     <Compile Include="hash\HashMD5.cs" />

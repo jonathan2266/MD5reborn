@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MD5reborn.logger;
-using MD5reborn.format;
 using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using MD5reborn.terminal;
@@ -28,11 +27,10 @@ namespace MD5reborn
             Logger logger = new FileLogger(logFileName);
             logSystemInfo(logger);
 
-            Format format = new FormatSingleLine(logger);
             Terminal terminal = new TerminalLocalScreen();
 
             //dirCheck
-            DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, format, directory, fileUnfinishedTag);
+            DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, directory, fileUnfinishedTag);
 
             folderState state;
             List<string> files = new List<string>();
@@ -41,15 +39,15 @@ namespace MD5reborn
 
             if (state == folderState.unfinished)
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, files);
+                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, files);
             }
             else if (state == folderState.finished)
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, files[0]);
+                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag, files[0]);
             }
             else //state.none
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag);
+                tManager = new ThreadManager(logger, dataChecker, directory, fileUnfinishedTag);
             }
 
             //startAguments dir
