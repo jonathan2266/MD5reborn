@@ -20,7 +20,7 @@ namespace MD5reborn
             //args
             //Dir
             string directory = args[0];
-            //hash
+            #region //hash
             IHash hash = new HashMD5();
             try
             {
@@ -41,7 +41,7 @@ namespace MD5reborn
                 Console.ReadLine();
                 Environment.Exit(1);
             }
-
+            #endregion
             //initial vars
             string fileUnfinishedTag = "unf";
             string logFileName = "MD5rebornLogs";
