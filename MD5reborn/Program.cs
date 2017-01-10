@@ -31,9 +31,9 @@ namespace MD5reborn
             Terminal terminal = new TerminalLocalScreen();
 
             //dirCheck
-            DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, directory, fileUnfinishedTag);
+            DataChecker.DataChecker dataChecker = new DataCheckerLocalHDD(logger, format, directory, fileUnfinishedTag);
             //dirSaver
-            DataSaver DSaver = new DataSaverLocalHDD(logger, format, directory, fileUnfinishedTag, flushTimer);
+            //DataSaver DSaver = new DataSaverLocalHDD(logger, format, directory, "lol", fileUnfinishedTag, flushTimer);
 
             folderState state;
             List<string> files = new List<string>();
@@ -42,15 +42,15 @@ namespace MD5reborn
 
             if (state == folderState.unfinished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag, files);
+                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files);
             }
             else if (state == folderState.finished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag, files[0]);
+                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files[0]);
             }
             else //state.none
             {
-                ThreadManager tManager = new ThreadManager(logger, format, DSaver, directory, fileUnfinishedTag);
+                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer);
             }
 
             //startAguments dir

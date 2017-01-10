@@ -8,7 +8,7 @@ using MD5reborn.format;
 
 namespace MD5reborn.dataSaver
 {
-    public abstract class DataSaver : IDataSaver, IDisposable
+    public abstract class DataSaver : IDataSaver
     {
         protected Ilogger logger;
         protected IFormat format;
@@ -18,7 +18,7 @@ namespace MD5reborn.dataSaver
             this.logger = logger;
         }
 
-        public abstract void Dispose();
         public abstract void PushData(string text, string hash);
+        public abstract void Finish();
     }
 }

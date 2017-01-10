@@ -8,5 +8,17 @@ namespace MD5reborn
 {
     public class WordGenerator
     {
+        public WordGenerator(string wordToStartFrom)
+        {
+
+        }
+        public void Next()
+        {
+            
+        }
+        public string GetCurrentWord()
+        {
+            return "";
+        }
     }
 }

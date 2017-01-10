@@ -10,16 +10,18 @@ namespace MD5reborn.dataSaver
     {
         private string echo = "DateSaverLocalHDD created";
         private string unfinishedTag;
-        private string filePath;
+        private string directory;
         private StreamWriter writer;
         private int flushTimer;
+        private string filename;
         private int currentFlushCount = 0;
-        public DataSaverLocalHDD(Ilogger logger,IFormat format, string filePath, string unfinishedTag, int flushTimer) : base(logger, format)
+        public DataSaverLocalHDD(Ilogger logger,IFormat format, string directory, string filename, string unfinishedTag, int flushTimer) : base(logger, format)
         {
             this.logger.log(echo);
-            this.flushTimer = flushTimer;
-            this.filePath = filePath;
+            this.directory = directory;
+            this.filename = filename;
             this.unfinishedTag = unfinishedTag;
+            this.flushTimer = flushTimer;
             configWriter();
         }
 
@@ -44,16 +46,28 @@ namespace MD5reborn.dataSaver
             currentFlushCount++;
 
         }
-        public override void Dispose()
-        {
-            writer.Flush();
-            writer.Close();
-        }
         private void configWriter()
         {
             try
             {
-                writer = File.AppendText(filePath);
+                writer = File.AppendText(directory + unfinishedTag + "/" + filename);
+            }
+            catch (Exception e)
+            {
+                logger.log(e.Data.ToString());
+                logger.stopLogging();
+                Thread.Sleep(1000);
+                Environment.Exit(1);
+            }
+        }
+
+        public override void Finish()
+        {
+            writer.Flush();
+            writer.Close();
+            try
+            {
+                File.Move(directory + unfinishedTag + "/" + filename, directory + filename);
             }
             catch (Exception e)
             {

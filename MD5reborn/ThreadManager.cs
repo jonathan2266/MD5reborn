@@ -8,6 +8,7 @@ using MD5reborn.format;
 using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using System.Threading;
+using MD5reborn.hash;
 
 namespace MD5reborn
 {
@@ -16,55 +17,134 @@ namespace MD5reborn
         private string echo = "Threadmanager created";
         private Ilogger logger;
         private IFormat format;
-        private IDataSaver dSaver;
         private IDataChecker dChecker;
         private string dir;
         private string fileUnFinishedTag;
+        private int flushTimer;
         private string finishedFilePath;
         private List<string> unfinishedList;
         private Thread[] workers;
+        private IDataSaver[] saver;
+        private int currentFileNr;
+        private string currentWord;
+        private bool isProgramRunning;
+        //private string[] jobs;
+        //private bool[] isRunning;
+        private bool[] isDone;
+        private int nrOfGroupedHashes;
+        private folderState state;
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, IDataSaver dSaver, string dir, string fileUnFinishedTag)
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer) //state.none
         {
             logger.log(echo); //new start
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
-            this.dSaver = dSaver;
+            this.flushTimer = flushTimer;
             this.dChecker = dChecker;
 
             //has to be done for everyone
-            init();
+            init(folderState.none);
+            currentFileNr = 0;
+            currentWord = "a";
+
         }
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, IDataSaver dSaver, string dir, string fileUnFinishedTag, string finishedFilePath)
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer, string finishedFilePath) //folderState.finished
         {
             logger.log(echo); //start from last
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
+            this.flushTimer = flushTimer;
             this.finishedFilePath = finishedFilePath;
             this.dChecker = dChecker;
 
-            init();
+            init(folderState.finished);
+            int ignore;
+            dChecker.GetLastWordOfFileInfo(finishedFilePath, out ignore, out currentWord);
+
         }
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, IDataSaver dSaver, string dir, string fileUnFinishedTag, List<string> unfinishedList)
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer, List<string> unfinishedList) //folderState.unfinished
         {
             logger.log(echo); //finish of last
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
+            this.flushTimer = flushTimer;
             this.unfinishedList = unfinishedList;
             this.dChecker = dChecker;
 
-            init();
+            init(folderState.unfinished);
+
         }
-        private void init()
+        public void Start()
         {
+            if (state == folderState.finished)
+            {
+
+            }
+            manage();
+        }
+        private void init(folderState state)
+        {
+            isProgramRunning = true;
+            nrOfGroupedHashes = 6000000;
+
+            this.state = state;
+            //jobs = new string[Environment.ProcessorCount];
+            //isRunning = new bool[Environment.ProcessorCount];
+            isDone = new bool[Environment.ProcessorCount]; 
             workers = new Thread[Environment.ProcessorCount];
+
+            saver = new IDataSaver[Environment.ProcessorCount];
+            if (state == folderState.none)
+            {
+                for (int i = 0; i < Environment.ProcessorCount; i++)
+                {
+                    //jobs[i] = Convert.ToString((i + 1));
+                    //isRunning[i] = false;
+                    isDone[i] = true;
+                }
+            }
+        }
+        private void manage()
+        {
+            while (isProgramRunning)
+            {
+                for (int i = 0; i < workers.Length; i++)
+                {
+                    if (isDone[i] == true)
+                    {
+                        //new job and start
+                        currentFileNr++;
+                        saver[i] = new DataSaverLocalHDD(logger, format, dir, currentFileNr + ".txt", fileUnFinishedTag, flushTimer);
+                        workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i]));
+                        workers[i].Start();
+
+                        //create new currentword
+                    }
+                }
+                Thread.Sleep(1);
+            }
+        }
+
+        private void hashing(int threadID, string startWord, int lenght, IDataSaver saver)
+        {
+            IHash hash = new HashMD5();
+            WordGenerator wGen = new WordGenerator(startWord);
+
+            for (int i = 0; i < lenght; i++)
+            {
+                wGen.Next();
+                saver.PushData(wGen.GetCurrentWord(), hash.Hash(wGen.GetCurrentWord()));
+            }
+
+            saver.Finish();
+            isDone[threadID] = true;
         }
     }
 }
