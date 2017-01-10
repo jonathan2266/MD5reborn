@@ -21,7 +21,6 @@ namespace MD5reborn
         private IDataChecker dChecker;
         private string dir;
         private string fileUnFinishedTag;
-        private int flushTimer;
         private string finishedFilePath;
         private List<string> unfinishedList;
         private Thread[] workers;
@@ -29,20 +28,17 @@ namespace MD5reborn
         private int currentFileNr;
         private string currentWord;
         private bool isProgramRunning;
-        //private string[] jobs;
-        //private bool[] isRunning;
         private bool[] isDone;
         private int nrOfGroupedHashes;
         private folderState state;
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer) //state.none
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag) //state.none
         {
             logger.log(echo); //new start
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
-            this.flushTimer = flushTimer;
             this.dChecker = dChecker;
 
             //has to be done for everyone
@@ -51,14 +47,13 @@ namespace MD5reborn
             currentWord = "";
 
         }
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer, string finishedFilePath) //folderState.finished
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath) //folderState.finished
         {
             logger.log(echo); //start from last
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
-            this.flushTimer = flushTimer;
             this.finishedFilePath = finishedFilePath;
             this.dChecker = dChecker;
 
@@ -69,14 +64,13 @@ namespace MD5reborn
 
         }
 
-        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer, List<string> unfinishedList) //folderState.unfinished
+        public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, List<string> unfinishedList) //folderState.unfinished
         {
             logger.log(echo); //finish of last
             this.logger = logger;
             this.format = format;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
-            this.flushTimer = flushTimer;
             this.unfinishedList = unfinishedList;
             this.dChecker = dChecker;
 
@@ -93,8 +87,6 @@ namespace MD5reborn
             nrOfGroupedHashes = 6000000;
 
             this.state = state;
-            //jobs = new string[Environment.ProcessorCount];
-            //isRunning = new bool[Environment.ProcessorCount];
             isDone = new bool[Environment.ProcessorCount]; 
             workers = new Thread[Environment.ProcessorCount];
 
@@ -103,8 +95,6 @@ namespace MD5reborn
             {
                 for (int i = 0; i < Environment.ProcessorCount; i++)
                 {
-                    //jobs[i] = Convert.ToString((i + 1));
-                    //isRunning[i] = false;
                     isDone[i] = true;
                 }
             }
@@ -119,7 +109,7 @@ namespace MD5reborn
                     {
                         //new job and start
                         currentFileNr++;
-                        saver[i] = new DataSaverLocalHDD(logger, format, dir, currentFileNr + ".txt", fileUnFinishedTag, flushTimer);
+                        saver[i] = new DataSaverLocalHDD(logger, format, dir, currentFileNr + ".txt", fileUnFinishedTag);
                         workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i]));
                         workers[i].Start();
                         isDone[i] = false;

@@ -43,15 +43,15 @@ namespace MD5reborn
 
             if (state == folderState.unfinished)
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, files);
             }
             else if (state == folderState.finished)
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files[0]);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, files[0]);
             }
             else //state.none
             {
-                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag);
             }
 
             //startAguments dir
