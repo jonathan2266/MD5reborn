@@ -35,11 +35,12 @@ namespace MD5reborn.logger
                     longString += temp + Environment.NewLine;
                 }
 
+
                 if (longString != "")
                 {
                     try
                     {
-                        StreamWriter writer = new StreamWriter(LogFile, true);
+                        StreamWriter writer = new StreamWriter(LogFile, true); //next thread this plz :p yey threaded in a bad way =]
                         writer.Write(longString);
                         writer.Close();
                     }
@@ -60,13 +61,14 @@ namespace MD5reborn.logger
                 try
                 {
                     File.Delete(LogFile);
-                    File.Create(LogFile);
+                    StreamWriter writer = new StreamWriter(LogFile, true);
+                    writer.WriteLine("Start of logs.");
+                    writer.Close();
                     isFunctional = true;
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Logging not possible");
-                    Console.ReadLine();
                     isFunctional = false;
                 }
             }
@@ -74,16 +76,16 @@ namespace MD5reborn.logger
             {
                 try
                 {
-                    File.Create(LogFile);
+                    StreamWriter writer = new StreamWriter(LogFile, true);
+                    writer.WriteLine("Start of logs.");
+                    writer.Close();
                     isFunctional = true;
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Logging not possible");
-                    Console.ReadLine();
                     isFunctional = false;
                 }
-
             }
         }
         public override void log(string text)
@@ -95,6 +97,8 @@ namespace MD5reborn.logger
         }
         public override void stopLogging()
         {
+            log("Stoplogging");
+            isFunctional = false;
             int currentCount = writeBuffer.Count;
             while (writeBuffer.Count > 0)
             {
@@ -109,6 +113,7 @@ namespace MD5reborn.logger
                 }
             }
             _shouldStop = true;
+            Environment.Exit(-1);
         }
     }
 }

@@ -8,11 +8,13 @@ using MD5reborn.format;
 using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using MD5reborn.terminal;
+using System.Threading;
 
 namespace MD5reborn
 {
     class Program
     {
+        static ThreadManager tManager;
         static void Main(string[] args)
         {
             //arg
@@ -21,7 +23,6 @@ namespace MD5reborn
             //initial vars
             string fileUnfinishedTag = "unf";
             string logFileName = "MD5rebornLogs";
-            int flushTimer = 50;
 
             //initial classes
             Logger logger = new FileLogger(logFileName);
@@ -42,15 +43,15 @@ namespace MD5reborn
 
             if (state == folderState.unfinished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files);
             }
             else if (state == folderState.finished)
             {
-                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files[0]);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer, files[0]);
             }
             else //state.none
             {
-                ThreadManager tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer);
+                tManager = new ThreadManager(logger, format, dataChecker, directory, fileUnfinishedTag, flushTimer);
             }
 
             //startAguments dir
@@ -65,12 +66,24 @@ namespace MD5reborn
             //fire up diffrent thread for console commands
 
             //fire up extra thread for displaying data
+            tManager.Start();
+
+            Console.WriteLine(":D");
+
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
         }
 
         private static void logSystemInfo(Ilogger logger)
         {
             logger.log("OS: " + Environment.OSVersion);
             logger.log("Cores: " + Environment.ProcessorCount);
+        }
+        private static void StartCalc()
+        {
+            tManager.Start();
         }
     }
 }

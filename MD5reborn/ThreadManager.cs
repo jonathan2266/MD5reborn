@@ -9,6 +9,7 @@ using MD5reborn.dataSaver;
 using MD5reborn.DataChecker;
 using System.Threading;
 using MD5reborn.hash;
+using System.IO;
 
 namespace MD5reborn
 {
@@ -47,7 +48,7 @@ namespace MD5reborn
             //has to be done for everyone
             init(folderState.none);
             currentFileNr = 0;
-            currentWord = "a";
+            currentWord = "";
 
         }
         public ThreadManager(Ilogger logger, IFormat format, IDataChecker dChecker, string dir, string fileUnFinishedTag, int flushTimer, string finishedFilePath) //folderState.finished
@@ -64,6 +65,7 @@ namespace MD5reborn
             init(folderState.finished);
             int ignore;
             dChecker.GetLastWordOfFileInfo(finishedFilePath, out ignore, out currentWord);
+            currentFileNr = Convert.ToInt32(Path.GetFileNameWithoutExtension(finishedFilePath));
 
         }
 
@@ -83,10 +85,6 @@ namespace MD5reborn
         }
         public void Start()
         {
-            if (state == folderState.finished)
-            {
-
-            }
             manage();
         }
         private void init(folderState state)
@@ -124,8 +122,15 @@ namespace MD5reborn
                         saver[i] = new DataSaverLocalHDD(logger, format, dir, currentFileNr + ".txt", fileUnFinishedTag, flushTimer);
                         workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i]));
                         workers[i].Start();
+                        isDone[i] = false;
 
-                        //create new currentword
+                        WordGenerator w = new WordGenerator(currentWord);
+                        //create new currentword with Wordjumper
+                        for (int j = 0; j < nrOfGroupedHashes; j++) //temp cuz wordjumper no ready
+                        {
+                            w.Next();
+                        }
+                        currentWord = w.GetCurrentWord();
                     }
                 }
                 Thread.Sleep(1);

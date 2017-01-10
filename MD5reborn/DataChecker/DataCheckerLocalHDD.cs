@@ -33,7 +33,7 @@ namespace MD5reborn.DataChecker
                 temp = Directory.GetFiles(directory);
 
                 //test none state
-                if (temp == null) //check if null then
+                if (temp.Length == 0) //check if null then
                 {
                     state = folderState.none;
                 }
@@ -91,7 +91,10 @@ namespace MD5reborn.DataChecker
                 }
             }
 
-            ret.Add(temp[biggest]);
+            if (temp.Length < 0)
+            {
+                ret.Add(temp[biggest]);
+            }
 
             return ret;
         }
