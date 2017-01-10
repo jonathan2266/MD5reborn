@@ -29,14 +29,16 @@ namespace MD5reborn
         private bool[] isDone;
         private int nrOfGroupedHashes;
         private folderState state;
+        private IHash hash;
 
-        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag) //state.none
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, IHash hash) //state.none
         {
             logger.log(echo); //new start
             this.logger = logger;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
             this.dChecker = dChecker;
+            this.hash = hash;
 
             //has to be done for everyone
             init(folderState.none);
@@ -44,7 +46,7 @@ namespace MD5reborn
             currentWord = "";
 
         }
-        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath) //folderState.finished
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath, IHash hash) //folderState.finished
         {
             logger.log(echo); //start from last
             this.logger = logger;
@@ -52,24 +54,12 @@ namespace MD5reborn
             this.fileUnFinishedTag = fileUnFinishedTag;
             this.finishedFilePath = finishedFilePath;
             this.dChecker = dChecker;
+            this.hash = hash;
 
             init(folderState.finished);
             int ignore;
             dChecker.GetLastWordOfFileInfo(finishedFilePath, out ignore, out currentWord);
             currentFileNr = Convert.ToInt32(Path.GetFileNameWithoutExtension(finishedFilePath));
-
-        }
-
-        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, List<string> unfinishedList) //folderState.unfinished
-        {
-            logger.log(echo); //finish of last
-            this.logger = logger;
-            this.dir = dir;
-            this.fileUnFinishedTag = fileUnFinishedTag;
-            this.unfinishedList = unfinishedList;
-            this.dChecker = dChecker;
-
-            init(folderState.unfinished);
 
         }
         public void Start()
@@ -105,7 +95,7 @@ namespace MD5reborn
                         //new job and start
                         currentFileNr++;
                         saver[i] = new DataSaverLocalHDD(logger, dir, currentFileNr + ".txt", fileUnFinishedTag);
-                        workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i]));
+                        workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i], hash));
                         workers[i].Start();
                         isDone[i] = false;
 
@@ -124,10 +114,9 @@ namespace MD5reborn
             }
         }
 
-        private void hashing(int threadID, string startWord, int lenght, IDataSaver saver)
+        private void hashing(int threadID, string startWord, int lenght, IDataSaver saver, IHash hash)
         {
             logger.log(DateTime.Now + "::Thread with ID: " + threadID + " started");
-            IHash hash = new HashMD5();
             WordGenerator wGen = new WordGenerator(startWord);
 
             for (int i = 0; i < lenght; i++)
