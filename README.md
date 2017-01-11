@@ -9,7 +9,7 @@ Should be compatible with any hashin algoritm.
 * When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash (currently MD5 and AES256 only)
 * When the program is restarted it can pick up at the word it last hashed
 * Different hashing algorithms
-* Currently this program works in linux mono. Be carefull that line endings are diffrent so windows created files are not compatible.
+* Currently this program works in linux mono. Be carefull that line endings are different so windows created files are not compatible.
 
 ## Future features
 * Windows linux compatible add options to choose line ending.
