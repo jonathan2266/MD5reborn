@@ -11,12 +11,12 @@ namespace MD5reborn.DataChecker
 {
     public class DataCheckerLocalHDD : DataChecker
     {
-        private string echo = "DataCheckerLocalHDD created";
+        private string echo = "DataCheckerLocalHDD: ";
         private string unfinishedTag;
         private string directory;
         public DataCheckerLocalHDD(Ilogger logger, string directory, string unfinishedTag) : base(logger)
         {
-            logger.log(echo);
+            logger.log(echo + "created");
             this.directory = directory;
             this.unfinishedTag = unfinishedTag;
         }
@@ -57,9 +57,8 @@ namespace MD5reborn.DataChecker
             }
             catch (Exception e)
             {
-                logger.log(e.Data.ToString());
+                logger.log(echo + e);
                 logger.stopLogging();
-                Thread.Sleep(1000);
                 Environment.Exit(1);
             }
 
@@ -89,9 +88,8 @@ namespace MD5reborn.DataChecker
                 }
                 catch (Exception e)
                 {
-                    logger.log(e.Data.ToString());
+                    logger.log(echo + e);
                     logger.stopLogging();
-                    Thread.Sleep(1000);
                     Environment.Exit(1);
                 }
             }
@@ -139,7 +137,7 @@ namespace MD5reborn.DataChecker
             }
             catch (Exception e)
             {
-                logger.log("fatal in DataCheckerLocalHDD " + e.Data);
+                logger.log("fatal in " + echo + e);
                 logger.stopLogging();
                 Thread.Sleep(500);
                 Environment.Exit(1);

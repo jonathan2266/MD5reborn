@@ -7,14 +7,14 @@ namespace MD5reborn.dataSaver
 {
     public class DataSaverLocalHDD : DataSaver
     {
-        private string echo = "DataSaverLocalHDD created";
+        private string echo = "DataSaverLocalHDD: ";
         private string unfinishedTag;
         private string directory;
         private StreamWriter writer;
         private string filename;
         public DataSaverLocalHDD(Ilogger logger, string directory, string filename, string unfinishedTag) : base(logger)
         {
-            this.logger.log(echo);
+            this.logger.log(echo + "created");
             this.directory = directory;
             this.filename = filename;
             this.unfinishedTag = unfinishedTag;
@@ -29,9 +29,8 @@ namespace MD5reborn.dataSaver
             }
             catch (Exception e)
             {
-                logger.log("DataSaverLocal PushData FileName:" + filename + " " + e.Data.ToString());
+                logger.log(echo + "PushData FileName:" + filename + " " + e);
                 logger.stopLogging();
-                Thread.Sleep(1000);
                 Environment.Exit(1);
             }
 
@@ -44,9 +43,8 @@ namespace MD5reborn.dataSaver
             }
             catch (Exception e)
             {
-                logger.log(e.Data.ToString());
+                logger.log(echo + e);
                 logger.stopLogging();
-                Thread.Sleep(1000);
                 Environment.Exit(1);
             }
         }
@@ -60,9 +58,8 @@ namespace MD5reborn.dataSaver
             }
             catch (Exception e)
             {
-                logger.log(e.Data.ToString());
+                logger.log(echo + e);
                 logger.stopLogging();
-                Thread.Sleep(1000);
                 Environment.Exit(1);
             }
         }

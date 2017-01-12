@@ -14,13 +14,12 @@ namespace MD5reborn
 {
     public class ThreadManager
     {
-        private string echo = "Threadmanager created";
+        private string echo = "Threadmanager: ";
         private Ilogger logger;
         private IDataChecker dChecker;
         private string dir;
         private string fileUnFinishedTag;
         private string finishedFilePath;
-        private List<string> unfinishedList;
         private Thread[] workers;
         private IDataSaver[] saver;
         private int currentFileNr;
@@ -33,7 +32,7 @@ namespace MD5reborn
 
         public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, IHash hash) //state.none
         {
-            logger.log(echo); //new start
+            logger.log(echo + "created"); //new start
             this.logger = logger;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
@@ -48,7 +47,7 @@ namespace MD5reborn
         }
         public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath, IHash hash) //folderState.finished
         {
-            logger.log(echo); //start from last
+            logger.log(echo + "created"); //start from last
             this.logger = logger;
             this.dir = dir;
             this.fileUnFinishedTag = fileUnFinishedTag;
@@ -59,7 +58,16 @@ namespace MD5reborn
             init(folderState.finished);
             int ignore;
             dChecker.GetLastWordOfFileInfo(finishedFilePath, out ignore, out currentWord);
-            currentFileNr = Convert.ToInt32(Path.GetFileNameWithoutExtension(finishedFilePath));
+            try
+            {
+                currentFileNr = Convert.ToInt32(Path.GetFileNameWithoutExtension(finishedFilePath));
+            }
+            catch (Exception e)
+            {
+                logger.log(echo + e);
+                logger.stopLogging();
+                Environment.Exit(1);
+            }
 
         }
         public void Start()
