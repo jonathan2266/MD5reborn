@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MD5reborn.logger;
 using System.IO;
 using System.Threading;
@@ -13,8 +10,8 @@ namespace MD5reborn.DataChecker
     {
         private string echo = "DataCheckerLocalHDD: ";
         private string unfinishedTag;
-        private string directory;
-        public DataCheckerLocalHDD(Ilogger logger, string directory, string unfinishedTag) : base(logger)
+        private List<string> directory;
+        public DataCheckerLocalHDD(Ilogger logger, List<string> directory, string unfinishedTag) : base(logger)
         {
             logger.log(echo + "created");
             this.directory = directory;
@@ -27,7 +24,8 @@ namespace MD5reborn.DataChecker
             List<string> unfList = new List<string>();
             try
             {
-                temp = Directory.GetFiles(directory);
+                temp = GetDirectoryFromDrives();
+
 
                 //test none state
                 if (temp.Length == 0) //check if null then
@@ -52,7 +50,7 @@ namespace MD5reborn.DataChecker
                 if (countNonUnf > 0)
                 {
                     state = folderState.finished;
-                    temp = Directory.GetFiles(directory);
+                    temp = GetDirectoryFromDrives();
                 }
             }
             catch (Exception e)
@@ -145,6 +143,26 @@ namespace MD5reborn.DataChecker
 
             word = read;
             lineNumber = iterations;
+        }
+        private string[] GetDirectoryFromDrives()
+        {
+            string[] temp;
+            List<string> complete = new List<string>();
+            for (int i = 0; i < directory.Count; i++)
+            {
+                temp = Directory.GetFiles(directory[i]);
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    complete.Add(temp[j]);
+                }
+            }
+
+            temp = new string[complete.Count];
+            for (int i = 0; i < complete.Count; i++)
+            {
+                temp[i] = complete[i];
+            }
+            return temp;
         }
     }
 }

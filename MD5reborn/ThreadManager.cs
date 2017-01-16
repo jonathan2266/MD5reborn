@@ -17,7 +17,7 @@ namespace MD5reborn
         private string echo = "Threadmanager: ";
         private Ilogger logger;
         private IDataChecker dChecker;
-        private string dir;
+        private List<string> dir;
         private string fileUnFinishedTag;
         private string finishedFilePath;
         private Thread[] workers;
@@ -29,8 +29,9 @@ namespace MD5reborn
         private int nrOfGroupedHashes;
         private folderState state;
         private IHash hash;
+        private int currentDriveGiven;
 
-        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, IHash hash) //state.none
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, List<string> dir, string fileUnFinishedTag, IHash hash) //state.none
         {
             logger.log(echo + "created"); //new start
             this.logger = logger;
@@ -45,7 +46,7 @@ namespace MD5reborn
             currentWord = "";
 
         }
-        public ThreadManager(Ilogger logger, IDataChecker dChecker, string dir, string fileUnFinishedTag, string finishedFilePath, IHash hash) //folderState.finished
+        public ThreadManager(Ilogger logger, IDataChecker dChecker, List<string> dir, string fileUnFinishedTag, string finishedFilePath, IHash hash) //folderState.finished
         {
             logger.log(echo + "created"); //start from last
             this.logger = logger;
@@ -91,6 +92,8 @@ namespace MD5reborn
                     isDone[i] = true;
                 }
             }
+
+            currentDriveGiven = 0;
         }
         private void manage()
         {
@@ -102,7 +105,8 @@ namespace MD5reborn
                     {
                         //new job and start
                         currentFileNr++;
-                        saver[i] = new DataSaverLocalHDD(logger, dir, currentFileNr + ".txt", fileUnFinishedTag);
+                        saver[i] = new DataSaverLocalHDD(logger, dir[currentDriveGiven], currentFileNr + ".txt", fileUnFinishedTag);
+                        driveCounter();
                         workers[i] = new Thread(() => hashing(i, currentWord, nrOfGroupedHashes, saver[i], hash));
                         workers[i].Start();
                         isDone[i] = false;
@@ -119,6 +123,15 @@ namespace MD5reborn
                     }
                 }
                 Thread.Sleep(1);
+            }
+        }
+
+        private void driveCounter()
+        {
+            currentDriveGiven++;
+            if (currentDriveGiven == dir.Count)
+            {
+                currentDriveGiven = 0;
             }
         }
 
