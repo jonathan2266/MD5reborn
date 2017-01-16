@@ -3,7 +3,7 @@ Multithreaded C# application to create your own rainbow tables in any hashing al
 
 ## What it does
 This program will create a rainbow table from scratch and can pick up where you left it.
-Should be compatible with any hashin algoritm.
+Should be compatible with any hashing algorithm.
 
 ##Current state
 * When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash (currently MD5 and AES256 only)
