@@ -5,16 +5,16 @@ Multithreaded C# application to create your own rainbow tables in any hashing al
 This program will create a rainbow table from scratch and can pick up where you left it.
 Should be compatible with any hashing algorithm.
 
-##Current state
+## Current state
 * When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash (currently MD5 and AES256 only)
 * When the program is restarted it can pick up at the word it last hashed
 * Different hashing algorithms
 * Currently this program works in linux mono. Be carefull that line endings are different so windows created files are not compatible.
+* Load balancing: Give up multiple destinations for your data. Writing from 16 Threads to one Hardrive might be a problem.
 
 ## Future features
 * Windows linux compatible add options to choose line ending.
 * More command line options: So you can choose ToDisk format (example: instead of writing to a file you write directly to a database).
-* Load balancing: Give up multiple destinations for your data. Writing from 16 Threads to one Hardrive might be a problem.
 * Performance tweaks: In the ToDisk section Also when this project is completed a c++ port could potentially speed up everything.
 * Better Debug data
 * Linux support for c# and c++
@@ -28,7 +28,8 @@ Clone the repo -> compile binary -> create an empty folder on a drive -> run the
 ### current arguments
 
 - arg0: [Path] : D:\\test\
-- arg1: [HashAlgoritm] : MD5 : SHA256
+- argN: [Path] : E:\\extra\drive\  You can add as many dives as you like.
+- argN+1: [HashAlgoritm] : MD5 : SHA256
 
 ## Why
 I like multithreading.
