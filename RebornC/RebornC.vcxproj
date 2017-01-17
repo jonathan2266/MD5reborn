@@ -150,20 +150,28 @@
   <ItemGroup>
     <ClCompile Include="dataChecker.cpp" />
     <ClCompile Include="dataCheckerLocalHDD.cpp" />
+    <ClCompile Include="dataSaver.cpp" />
+    <ClCompile Include="dataSaverLocalHDD.cpp" />
     <ClCompile Include="hasher.cpp" />
     <ClCompile Include="hashMD5.cpp" />
     <ClCompile Include="hashSHA256.cpp" />
+    <ClCompile Include="iDataSaver.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="threadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dataChecker.h" />
     <ClInclude Include="dataCheckerLocalHDD.h" />
+    <ClInclude Include="dataSaver.h" />
+    <ClInclude Include="dataSaverLocalHDD.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="hasher.h" />
     <ClInclude Include="hashMD5.h" />
     <ClInclude Include="hashSHA256.h" />
     <ClInclude Include="iDataChecker.h" />
+    <ClInclude Include="iDataSaver.h" />
     <ClInclude Include="iHash.h" />
+    <ClInclude Include="threadManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

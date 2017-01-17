@@ -7,6 +7,8 @@
 #include "hashMD5.h"
 #include "hasher.h"
 #include "hashSHA256.h"
+#include "dataChecker.h"
+#include "dataCheckerLocalHDD.h"
 
 using namespace std;
 using namespace boost::filesystem;
@@ -49,6 +51,25 @@ int main(int argc, char* argv[]) {
 
 	string fileUnfinishedTag = "unf";
 	string logFileName = "MD5rebornLogs";
+
+	//init logger and terminal
+
+	//dircheck
+	dataChecker* dChecker = new dataCheckerLocalHDD(directory, &fileUnfinishedTag);
+
+	folderState state;
+	std::vector<std::string> files;
+
+	dChecker->GetStatus(state, files);
+
+	if (state == folderState::finished)
+	{
+
+	}
+	else if (state == folderState::none)
+	{
+
+	}
 
 	char lol[50];
 	std::cin >> lol;

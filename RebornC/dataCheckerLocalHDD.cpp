@@ -17,7 +17,7 @@ void dataCheckerLocalHDD::GetStatus(folderState & out_state, std::vector<std::st
 {
 	out_state = folderState::finished;
 	std::vector<std::string>* temp;
-	std::vector<std::string>* unfList;
+	std::vector<std::string>* unfList = new std::vector<std::string>();
 
 	try
 	{
@@ -112,7 +112,7 @@ void dataCheckerLocalHDD::GetLastWordOfFileInfo(std::string fileDir, int & lineN
 
 std::vector<std::string>* dataCheckerLocalHDD::GetDirectoryFromDrives()
 {
-	std::vector<std::string>* complete;
+	std::vector<std::string>* complete = new std::vector<std::string>();
 	for (size_t i = 0; i < _directory.size(); i++)
 	{
 		for (boost::filesystem::directory_entry& e : boost::filesystem::directory_iterator(_directory.at(i)))
@@ -126,14 +126,14 @@ std::vector<std::string>* dataCheckerLocalHDD::GetDirectoryFromDrives()
 
 std::vector<std::string>* dataCheckerLocalHDD::getLastestFile(std::vector<std::string>& temp)
 {
-	std::vector<std::string>* ret = nullptr;
+	std::vector<std::string>* ret = new std::vector<std::string>();
 	std::string* local = new std::string[temp.size()];
 	int biggest = 0;
 
 	for (size_t i = 0; i < temp.size(); i++)
 	{
 		boost::filesystem::path p(temp.at(i));
-		local[i] == p.stem();
+		local[i] = p.stem().string();
 
 		try
 		{
@@ -151,7 +151,8 @@ std::vector<std::string>* dataCheckerLocalHDD::getLastestFile(std::vector<std::s
 	{
 		ret->push_back(temp.at(biggest));
 	}
-	return ret;
 
 	delete[] local;
+	return ret;
+
 }

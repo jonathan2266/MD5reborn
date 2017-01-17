@@ -31,7 +31,7 @@ namespace MD5reborn
             }
             
             #region hash
-            IHash hash = new HashMD5();
+            Hasher hash = new HashMD5();
             try
             {
                 HashType hashType = (HashType)Enum.Parse(typeof(HashType), args[count], true);
