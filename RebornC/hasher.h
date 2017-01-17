@@ -6,6 +6,8 @@
 class hasher : public iHash
 {
 public:
+	hasher();
+	~hasher();
 	virtual char* Hash(const char text[]) = 0;
 };
 
