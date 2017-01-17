@@ -75,17 +75,15 @@ string wordGenerator::GetCurrentWord()
 
 void wordGenerator::transLateToLetters()
 {
-	int* reversed = new int[listOfNumbers.size()];
+	vector<int> reversed = listOfNumbers;
 	string builder = "";
-	std::copy(listOfNumbers.begin(), listOfNumbers.end(), reversed);
-	std::reverse(reversed, reversed);
+	std::reverse(reversed.begin(), reversed.end());
 
 	for (size_t i = 0; i < listOfNumbers.size(); i++)
 	{
-		builder.append(l->NumberToString(reversed[i]));
+		builder.append(l->NumberToString(reversed.at(i)));
 	}
 	text = builder;
-	delete[] reversed;
 }
 
 void wordGenerator::convertToNumbers(string * lastEntry)
