@@ -88,7 +88,7 @@ void wordGenerator::transLateToLetters()
 
 void wordGenerator::convertToNumbers(string * lastEntry)
 {
-	std::vector<char> entry((*lastEntry).c_str(), (*lastEntry).c_str() + (*lastEntry).size() + 1);
+	std::vector<char> entry((*lastEntry).c_str(), (*lastEntry).c_str() + (*lastEntry).size());
 
 	for (size_t i = 0; i < entry.size(); i++)
 	{
