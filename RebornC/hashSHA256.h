@@ -1,6 +1,8 @@
 #ifndef HASHSHA256_H
 #define HASHSHA256_H
 #include "hasher.h"
+#include <openssl\sha.h>
+#include <string>
 
 class hashSHA256 : public hasher
 {
