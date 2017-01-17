@@ -1,8 +1,9 @@
 #ifndef HASHMD5_H
 #define HASHMD5_H
 #include "hasher.h"
-#include <openssl\md5.h>
+#include <openssl/md5.h>
 #include <string>
+#include <cstring>
 
 class hashMD5 : public hasher
 {

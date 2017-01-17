@@ -2,7 +2,7 @@
 #define THREADMANAGER_H
 #include <string>
 #include <thread>
-#include <boost\thread.hpp>
+#include <boost/thread.hpp>
 #include "dataChecker.h"
 #include "hasher.h"
 #include "iDataSaver.h"
