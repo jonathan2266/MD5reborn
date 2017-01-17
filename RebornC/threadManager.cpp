@@ -23,9 +23,18 @@ threadManager::threadManager(iDataChecker* dChecker, vector<string>* dir, string
 	this->dChecker = dChecker;
 	this->hash = hash;
 
-	init(folderState::none);
-	currentFileNr = 0;
-	currentWord = "";
+	init(folderState::finished);
+	int ignore;
+	dChecker->GetLastWordOfFileInfo(*finishedFilePath, ignore, currentWord);
+	try
+	{
+		boost::filesystem::path p(*finishedFilePath);
+		currentFileNr = stoi(p.stem().string());
+	}
+	catch (const std::exception&)
+	{
+		//logger
+	}
 }
 
 threadManager::~threadManager()
