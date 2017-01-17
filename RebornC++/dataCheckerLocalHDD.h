@@ -1,7 +1,7 @@
 #ifndef DATACHECKERLOCALHDD_H
 #define DATACHECKERLOCALHDD_H
 #include "dataChecker.h"
-#include <boost\filesystem.hpp>
+#include <boost/filesystem.hpp>
 
 class dataCheckerLocalHDD : public dataChecker
 {

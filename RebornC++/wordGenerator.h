@@ -1,8 +1,9 @@
+#include "link.h"
+
 #ifndef WORDGENERATOR_H
 #define WORDGENERATOR_H
 #include <string>
 #include <vector>
-#include "link.h"
 
 using namespace std;
 

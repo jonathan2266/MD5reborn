@@ -1,0 +1,1 @@
+g++ -I /home/jonathan/openssl-1.1.0c/include/ -I /home/jonathan/boost_1_63_0/ -L /home/jonathan/openssl-1.1.0c/ -L /home/jonathan/boost_1_63_0/stage/lib/ -lboost_filesystem -lboost_system -lboost_thread -lcrypto -lssl *.cpp -O3 -o hasher -std=c++11 -fpermissive

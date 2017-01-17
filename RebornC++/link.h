@@ -1,6 +1,7 @@
 #ifndef LINK_H
 #define LINK_H
 #include <string>
+#include <algorithm>
 
 class link
 {
