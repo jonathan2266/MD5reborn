@@ -132,6 +132,8 @@ namespace MD5reborn.DataChecker
                         break;
                     }
                 }
+
+                reader.Close();
             }
             catch (Exception e)
             {

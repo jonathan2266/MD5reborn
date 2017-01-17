@@ -27,6 +27,12 @@
     <ClCompile Include="hashSHA256.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dataChecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dataCheckerLocalHDD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hasher.h">
@@ -39,6 +45,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hashSHA256.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iDataChecker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dataChecker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dataCheckerLocalHDD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
