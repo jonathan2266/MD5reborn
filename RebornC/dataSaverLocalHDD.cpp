@@ -1,7 +1,6 @@
 #include "dataSaverLocalHDD.h"
 
 
-std::ofstream* writer;
 
 dataSaverLocalHDD::dataSaverLocalHDD()
 {
@@ -10,14 +9,15 @@ dataSaverLocalHDD::dataSaverLocalHDD()
 dataSaverLocalHDD::dataSaverLocalHDD(string directory, string filename, string * unfinishedTag)
 {
 	//logger
-	this->directory = directory;
-	this->filename = filename;
-	this->unfinishedTag = unfinishedTag;
+	_directory = directory;
+	_filename = filename;
+	_unfinishedTag = unfinishedTag;
 	configWriter();
 }
 
 dataSaverLocalHDD::~dataSaverLocalHDD()
 {
+
 }
 
 void dataSaverLocalHDD::PushData(string * text, string* hash)
@@ -37,7 +37,7 @@ void dataSaverLocalHDD::Finish()
 	writer->close();
 	try
 	{
-		boost::filesystem::rename(directory + "\\" +*unfinishedTag + filename, directory + "\\" + filename);
+		boost::filesystem::rename(_directory + *_unfinishedTag + _filename, _directory + _filename);
 	}
 	catch (const std::exception&)
 	{
@@ -49,8 +49,7 @@ void dataSaverLocalHDD::configWriter()
 {
 	try
 	{
-		writer = new ofstream(directory + "\\" + *unfinishedTag + filename);
-		*writer << "lol plz";
+		writer = new ofstream(_directory + *_unfinishedTag + _filename);
 	}
 	catch (const std::exception&)
 	{

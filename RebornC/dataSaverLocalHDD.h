@@ -16,9 +16,10 @@ public:
 	virtual void Finish();
 private:
 	string echo = "DataSaverLocalHDD: ";
-	string* unfinishedTag;
-	string directory;
-	string filename;
+	std::ofstream* writer;
+	string* _unfinishedTag;
+	string _directory;
+	string _filename;
 	void configWriter();
 };
 

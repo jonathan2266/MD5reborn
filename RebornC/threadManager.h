@@ -28,7 +28,7 @@ private:
 	string* fileUnFinishedTag;
 	string finishedFilePath;
 	boost::thread* workers;
-	iDataSaver* saver;
+	iDataSaver** saver;
 	int currentFileNr;
 	string currentWord;
 	bool isProgramRunning;

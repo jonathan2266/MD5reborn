@@ -70,10 +70,10 @@ void threadManager::manage()
 				currentFileNr++;
 				if (saver == nullptr)
 				{
-					saver = new dataSaverLocalHDD[std::thread::hardware_concurrency()];
+					saver = new iDataSaver*[std::thread::hardware_concurrency()];
 				}
 				driveCounter();
-				saver[i] = dataSaverLocalHDD(dir->at(currentDriveGiven), std::to_string(currentFileNr) + ".txt", fileUnFinishedTag);
+				saver[i] = new dataSaverLocalHDD(dir->at(currentDriveGiven), std::to_string(currentFileNr) + ".txt", fileUnFinishedTag);
 				workers[i] = boost::thread(&threadManager::hashing, this, i, currentWord, nrOfGroupedHashes);
 				isDone[i] = false;
 
@@ -98,14 +98,15 @@ void threadManager::hashing(int threadID, string startWord, int lenght)
 	//logger
 	wordGenerator* wGen = new wordGenerator(&startWord);
 
-	for (size_t i = 0; i < lenght; i++)
+	for (int i = 0; i < lenght; i++)
 	{
 		wGen->Next();
-		saver->PushData(&wGen->GetCurrentWord(), &this->hash->Hash(wGen->GetCurrentWord().c_str()));
+		saver[threadID]->PushData(&wGen->GetCurrentWord(), &this->hash->Hash(wGen->GetCurrentWord().c_str()));
 	}
 
-	saver[threadID].Finish();
+	saver[threadID]->Finish();
 	isDone[threadID] = true;
+	delete wGen;
 	//logger
 }
 

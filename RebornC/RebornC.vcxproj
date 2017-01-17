@@ -155,6 +155,7 @@
     <ClCompile Include="hasher.cpp" />
     <ClCompile Include="hashMD5.cpp" />
     <ClCompile Include="hashSHA256.cpp" />
+    <ClCompile Include="link.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="threadManager.cpp" />
     <ClCompile Include="wordGenerator.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="iDataChecker.h" />
     <ClInclude Include="iDataSaver.h" />
     <ClInclude Include="iHash.h" />
+    <ClInclude Include="link.h" />
     <ClInclude Include="threadManager.h" />
     <ClInclude Include="wordGenerator.h" />
   </ItemGroup>
