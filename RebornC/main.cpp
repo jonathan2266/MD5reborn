@@ -9,6 +9,7 @@
 #include "hashSHA256.h"
 #include "dataChecker.h"
 #include "dataCheckerLocalHDD.h"
+#include "threadManager.h"
 
 using namespace std;
 using namespace boost::filesystem;
@@ -30,16 +31,16 @@ int main(int argc, char* argv[]) {
 			break;
 		}
 	}
-	hasher* hash;
+	iHash* hashh;
 
 	std::string hashType = argv[count]; //add try
 	if (hashType == "MD5")
 	{
-		hash = new hashMD5();
+		hashh = new hashMD5();
 	}
 	else if (hashType == "SHA256")
 	{
-		hash = new hashSHA256();
+		hashh = new hashSHA256();
 	}
 	else
 	{
@@ -55,21 +56,24 @@ int main(int argc, char* argv[]) {
 	//init logger and terminal
 
 	//dircheck
-	dataChecker* dChecker = new dataCheckerLocalHDD(directory, &fileUnfinishedTag);
+	iDataChecker* dChecker = new dataCheckerLocalHDD(directory, &fileUnfinishedTag);
 
 	folderState state;
 	std::vector<std::string> files;
 
 	dChecker->GetStatus(state, files);
 
+	threadManager* tManager;
 	if (state == folderState::finished)
 	{
-
+		tManager = new threadManager(dChecker, directory, &fileUnfinishedTag, &files.at(0), hashh);
 	}
 	else if (state == folderState::none)
 	{
-
+		tManager = new threadManager(dChecker, directory, &fileUnfinishedTag, hashh);
 	}
+
+	tManager->Start();
 
 	char lol[50];
 	std::cin >> lol;

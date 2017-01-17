@@ -1,7 +1,7 @@
 #include "hashMD5.h"
 
 
-char * hashMD5::Hash(const char text[])
+std::string hashMD5::Hash(const char text[])
 {
 	unsigned char digest[MD5_DIGEST_LENGTH];
 	MD5((unsigned char*)text, strlen(text), (unsigned char*)digest);
@@ -11,7 +11,9 @@ char * hashMD5::Hash(const char text[])
 		sprintf(&md[i * 2], "%02x", digest[i]);
 	}
 	
-	return md;
+	std::string m = std::string(md);
+	delete[] md;
+	return m;
 }
 
 hashMD5::~hashMD5()

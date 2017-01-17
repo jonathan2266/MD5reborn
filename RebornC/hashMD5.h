@@ -7,7 +7,7 @@
 class hashMD5 : public hasher
 {
 public:
-	virtual char* Hash(const char text[]);
+	virtual std::string Hash(const char text[]);
 	~hashMD5();
 };
 

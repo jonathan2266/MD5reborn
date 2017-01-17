@@ -7,7 +7,7 @@ class hashSHA256 : public hasher
 public:
 	hashSHA256();
 	~hashSHA256();
-	virtual char* Hash(const char text[]);
+	virtual std::string Hash(const char text[]);
 };
 
 #endif // !HASHSHA256_H

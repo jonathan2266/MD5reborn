@@ -8,7 +8,7 @@ class hasher : public iHash
 public:
 	hasher();
 	~hasher();
-	virtual char* Hash(const char text[]) = 0;
+	virtual std::string Hash(const char text[]) = 0;
 };
 
 #endif // !HASHER_H

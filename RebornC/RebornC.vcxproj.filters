@@ -42,7 +42,7 @@
     <ClCompile Include="dataSaverLocalHDD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="iDataSaver.cpp">
+    <ClCompile Include="wordGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="iDataSaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wordGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

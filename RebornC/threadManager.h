@@ -2,16 +2,24 @@
 #define THREADMANAGER_H
 #include <string>
 #include <thread>
+#include <boost\thread.hpp>
 #include "dataChecker.h"
 #include "hasher.h"
+#include "iDataSaver.h"
+#include "dataSaverLocalHDD.h"
+#include "wordGenerator.h"
 
 using namespace std;
+using namespace boost;
+using namespace boost::this_thread;
 
 class threadManager
 {
 public:
 	threadManager(iDataChecker * dChecker, vector<string>* dir, string * fileUnFinishedTag, iHash * hash);
+	threadManager(iDataChecker * dChecker, vector<string>* dir, string * fileUnFinishedTag, string* finishedFilePath, iHash * hash);
 	~threadManager();
+	void Start();
 private:
 	string echo;
 	//logger
@@ -19,8 +27,8 @@ private:
 	vector<string>* dir;
 	string* fileUnFinishedTag;
 	string finishedFilePath;
-	//threads?
-	//datasaver
+	boost::thread* workers;
+	iDataSaver* saver;
 	int currentFileNr;
 	string currentWord;
 	bool isProgramRunning;
@@ -31,6 +39,9 @@ private:
 	int currentDriveGiven;
 
 	void init(folderState state);
+	void manage();
+	void hashing(int threadID, string startWord, int lenght);
+	void driveCounter();
 };
 
 
