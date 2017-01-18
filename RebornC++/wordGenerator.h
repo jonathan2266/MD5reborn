@@ -4,6 +4,7 @@
 #define WORDGENERATOR_H
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 

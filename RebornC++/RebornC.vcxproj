@@ -177,6 +177,9 @@
     <ClInclude Include="threadManager.h" />
     <ClInclude Include="wordGenerator.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="linuxCompile.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

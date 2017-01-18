@@ -1,8 +1,7 @@
 #include <vector>
 #include <string>
-#include <boost\filesystem.hpp>
+#include <boost/filesystem.hpp>
 #include <iostream>
-#include <openssl\md5.h>
 #include "iHash.h"
 #include "hashMD5.h"
 #include "hasher.h"

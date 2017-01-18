@@ -4,7 +4,6 @@
 #include <openssl/sha.h>
 #include <string>
 #include <cstring>
-#include <algorithm>
 
 class hashSHA256 : public hasher
 {

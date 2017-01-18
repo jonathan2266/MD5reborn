@@ -39,6 +39,13 @@ threadManager::threadManager(iDataChecker* dChecker, vector<string>* dir, string
 
 threadManager::~threadManager()
 {
+	delete[] workers;
+	for (size_t i = 0; i < std::thread::hardware_concurrency(); i++)
+	{
+		delete saver[i];
+	}
+	delete saver;
+	delete[] isDone;
 }
 
 void threadManager::Start()

@@ -17,7 +17,7 @@ dataSaverLocalHDD::dataSaverLocalHDD(string directory, string filename, string *
 
 dataSaverLocalHDD::~dataSaverLocalHDD()
 {
-
+	delete writer;
 }
 
 void dataSaverLocalHDD::PushData(string * text, string* hash)
