@@ -12,13 +12,13 @@ Should be compatible with any hashing algorithm. Currently MD5, SHA256
 * Currently this program works in linux mono. Be carefull that line endings are different so windows created files are not compatible.
 * Load balancing: Give up multiple destinations for your data. Writing from 16 Threads to one Hardrive might be a problem.
 * A speedy c++ port.
+* Linux support for c# and c++
 
 ## Future features
 * Windows linux compatible add options to choose line ending.
 * More command line options: So you can choose ToDisk format (example: instead of writing to a file you write directly to a database).
 * Performance tweaks: In the ToDisk section Also when this project is completed a c++ port could potentially speed up everything.
 * Better Debug data
-* Linux support for c# and c++
 * Console info and possibly commands
 * Load balancing with master slave -> so a master sends out jobs to slaves over tcp. Working example is another project of mine  **MD5_V4.0**. You might want to pull a older verion newest one does not work.
 * **Crazy** When there is nothing left why not add gpu acceleration :) if we ever get there.
