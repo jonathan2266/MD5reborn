@@ -8,6 +8,7 @@
 #include "iDataSaver.h"
 #include "dataSaverLocalHDD.h"
 #include "wordGenerator.h"
+#include "wordJumper.h"
 
 using namespace std;
 using namespace boost;

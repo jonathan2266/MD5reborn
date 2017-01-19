@@ -3,11 +3,11 @@ Multithreaded application to create your own rainbow tables in any hashing algor
 
 ## What it does
 This program will create a rainbow table from scratch and can pick up where you left it.
-Should be compatible with any hashing algorithm. Currently MD5, SHA256
+Should be compatible with any hashing algorithm. Currently MD5, SHA256, SHA512
 
 ## Current state
-* When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash (currently MD5 and AES256 only)
-* When the program is restarted it can pick up at the word it last hashed
+* When given a blank folder the program can start creating files from scratch. These files contain 12Million lines a word starting from "a" and its hash.
+* When the program is restarted it can pick up at the word it last hashed.
 * Different hashing algorithms
 * Currently this program works in linux mono. Be carefull that line endings are different so windows created files are not compatible.
 * Load balancing: Give up multiple destinations for your data. Writing from 16 Threads to one Hardrive might be a problem.
@@ -31,7 +31,7 @@ C++ requires extra binaries. openSSL (1.1.0c) and boost (1.63.0)
 
 - arg0: [Path] : D:\\test\
 - argN: [Path] : E:\\extra\drive\  You can add as many dives as you like.
-- argN+1: [HashAlgoritm] : MD5 : SHA256
+- argN+1: [HashAlgoritm] : MD5 : SHA256 : SHA512
 
 ## Why
 I like multithreading.

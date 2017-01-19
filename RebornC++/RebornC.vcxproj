@@ -156,10 +156,12 @@
     <ClCompile Include="hasher.cpp" />
     <ClCompile Include="hashMD5.cpp" />
     <ClCompile Include="hashSHA256.cpp" />
+    <ClCompile Include="hashSHA512.cpp" />
     <ClCompile Include="link.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="threadManager.cpp" />
     <ClCompile Include="wordGenerator.cpp" />
+    <ClCompile Include="wordJumper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dataChecker.h" />
@@ -170,12 +172,17 @@
     <ClInclude Include="hasher.h" />
     <ClInclude Include="hashMD5.h" />
     <ClInclude Include="hashSHA256.h" />
+    <ClInclude Include="hashSHA512.h" />
     <ClInclude Include="iDataChecker.h" />
     <ClInclude Include="iDataSaver.h" />
     <ClInclude Include="iHash.h" />
     <ClInclude Include="link.h" />
     <ClInclude Include="threadManager.h" />
     <ClInclude Include="wordGenerator.h" />
+    <ClInclude Include="wordJumper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="linuxCompile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

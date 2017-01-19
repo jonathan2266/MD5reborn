@@ -4,6 +4,7 @@
 #define WORDGENERATOR_H
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,9 +19,11 @@ private:
 	vector<int> listOfNumbers;
 	string text;
 	link* l;
+	int* base;
 
 	void transLateToLetters();
 	void convertToNumbers(string* lastEntry);
+	void checkOverflow();
 };
 
 #endif // !WORDGENERATOR_H

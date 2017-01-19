@@ -1,12 +1,12 @@
 #include <vector>
 #include <string>
-#include <boost\filesystem.hpp>
+#include <boost/filesystem.hpp>
 #include <iostream>
-#include <openssl\md5.h>
 #include "iHash.h"
 #include "hashMD5.h"
 #include "hasher.h"
 #include "hashSHA256.h"
+#include "hashSHA512.h"
 #include "dataChecker.h"
 #include "dataCheckerLocalHDD.h"
 #include "threadManager.h"
@@ -42,6 +42,10 @@ int main(int argc, char* argv[]) {
 	{
 		hashh = new hashSHA256();
 	}
+	else if (hashType == "SHA512")
+	{
+		hashh = new hashSHA512();
+	}
 	else
 	{
 		std::cout << "Error parsing second command line argument: " << argv[count];
@@ -75,6 +79,8 @@ int main(int argc, char* argv[]) {
 
 	tManager->Start();
 
-	char lol[50];
-	std::cin >> lol;
+	//char lol[50];
+	//std::cin >> lol;
+
+	return 0;
 }

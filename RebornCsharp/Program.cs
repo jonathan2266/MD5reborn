@@ -43,6 +43,10 @@ namespace MD5reborn
                 {
                     hash = new HashSHA256();
                 }
+                if (hashType == HashType.SHA512)
+                {
+                    hash = new HashSHA512();
+                }
 
             }
             catch (Exception e)

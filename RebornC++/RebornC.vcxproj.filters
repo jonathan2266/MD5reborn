@@ -48,6 +48,12 @@
     <ClCompile Include="link.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="wordJumper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hashSHA512.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hasher.h">
@@ -92,5 +98,14 @@
     <ClInclude Include="link.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="wordJumper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hashSHA512.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="linuxCompile.txt" />
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ link::link()
 
 link::~link()
 {
+
 }
 int * link::GetIndexLenght()
 {
@@ -406,7 +407,7 @@ int link::StringToNumber(char letter)
 		temp = 63;
 		break;
 	default:
-		temp = 1;
+		temp = 0;
 		break;
 	}
 	return temp;

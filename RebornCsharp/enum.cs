@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MD5reborn
+﻿namespace MD5reborn
 {
     public enum folderState
     {
@@ -15,6 +9,7 @@ namespace MD5reborn
     public enum HashType
     {
         MD5,
-        SHA256
+        SHA256,
+        SHA512
     }
 }
