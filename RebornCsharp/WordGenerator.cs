@@ -25,48 +25,38 @@ namespace MD5reborn
         }
         public void Next()
         {
-            bool addLetter = false;
-            bool changed = false;
-            for (int i = 0; i < listOfNumbers.Count; i++)
-            {
-                if (listOfNumbers[0] < 63 && i == 0)
-                {
-                    listOfNumbers[0]++;
-                    changed = true;
-                }
-                if (listOfNumbers[0] == 63 && i < listOfNumbers.Count - 1 && i == 0 && changed == false)
-                {
-                    listOfNumbers[0] = 1;
-                    listOfNumbers[1]++;
-                    changed = true;
-                }
-                if (listOfNumbers[i] == 63 && i == listOfNumbers.Count - 1 && changed == false)
-                {
-                    listOfNumbers[i] = 1;
-                    addLetter = true;
-                    changed = true;
-                }
-
-                if (listOfNumbers[i] == 64 && i < listOfNumbers.Count - 1 && changed == false)
-                {
-                    listOfNumbers[i] = 1;
-                    listOfNumbers[i + 1]++;
-                    changed = true;
-                }
-                if (listOfNumbers[i] == 64 && i == listOfNumbers.Count - 1 && changed == false)
-                {
-                    listOfNumbers[i] = 1;
-                    addLetter = true;
-                    changed = true;
-                }
-                changed = false;
-            }
-            if (addLetter == true)
-            {
-                listOfNumbers.Insert(0, 1);
-            }
+            listOfNumbers[0] += 1;
+            checkOverflow();
             transLateToLetters();
         }
+
+        private void checkOverflow()
+        {
+            bool overflowFound = false;
+            for (int i = 0; i < listOfNumbers.Count; i++)
+            {
+                if (listOfNumbers[i] == 64)
+                {
+                    overflowFound = true;
+                    listOfNumbers[i] = 1;
+                    //check if can carry
+                    if (i + 1 < listOfNumbers.Count) //space to carry
+                    {
+                        listOfNumbers[i + 1] += 1;
+                    }
+                    else
+                    {
+                        listOfNumbers.Add(1);
+                    }
+                }
+            }
+
+            if (overflowFound)
+            {
+                checkOverflow();
+            }
+        }
+
         public string GetCurrentWord()
         {
             return text;
@@ -99,7 +89,7 @@ namespace MD5reborn
 
     class linker
     {
-        private int indexLenght = 63;
+        private int indexLenght = 64;
         public int IndexLenght { get { return indexLenght; } }
         public string NumberToString(int i)
         {
@@ -495,7 +485,7 @@ namespace MD5reborn
                     temp = 63;
                     break;
                 default:
-                    temp = 1;
+                    temp = 0;
                     break;
             }
             return temp;

@@ -74,6 +74,7 @@
     <Compile Include="hash\HashMD5.cs" />
     <Compile Include="hash\HashMD5_C.cs" />
     <Compile Include="hash\HashSHA256.cs" />
+    <Compile Include="hash\HashSHA512.cs" />
     <Compile Include="hash\IHash.cs" />
     <Compile Include="logger\FileLogger.cs" />
     <Compile Include="logger\Ilogger.cs" />
