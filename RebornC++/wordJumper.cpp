@@ -26,46 +26,36 @@ std::string wordJumper::Jump(std::string word, int increaseBy)
 
 	combination += increaseBy;
 
+	//combination++; //a fix
+	//if (combination % *base == 0)
+	//{
+	//	int c = combination / *base;
+	//	combination++;
+	//}
+
+	if (combination > *base)  //something herere!!!!!!!!!!!!!!!!!!!
+	{
+		combination++;
+	}
+
 	//check exponent size
 	int expNr = 0;
-	if (combination > (*base * 2) + 1)
+
+	while (true)
 	{
-		while (true)
+		int res = combination - std::pow(*base, expNr);
+		if (res > 0)
 		{
-			int res = combination - std::pow(*base, expNr);
-			if (res > *base)
-			{
-				expNr++;
-			}
-			else if (res < *base)
-			{
-				expNr--;
-				break;
-			}
-			else if (res == *base)
-			{
-				break;
-			}
+			expNr++;
 		}
-	}
-	else
-	{
-		while (true)
+		else if (res < 0)
 		{
-			int res = combination - std::pow(*base, expNr);
-			if (res > 0)
-			{
-				expNr++;
-			}
-			else if (res < 0)
-			{
-				expNr--;
-				break;
-			}
-			else if (res == 0)
-			{
-				break;
-			}
+			expNr--;
+			break;
+		}
+		else if (res == 0)
+		{
+			break;
 		}
 	}
 
@@ -76,11 +66,6 @@ std::string wordJumper::Jump(std::string word, int increaseBy)
 	int count = 0;
 	while (true)
 	{
-		if (expNr < 0)
-		{
-			result += l->NumberToString(0);
-			break;
-		}
 		combPig = combination - std::pow(*base, expNr);
 		if (combPig > 0)
 		{
@@ -90,25 +75,14 @@ std::string wordJumper::Jump(std::string word, int increaseBy)
 		else if (combPig < 0)
 		{
 			combPig = combination;
-			count--;
 			expNr--;
 			result += l->NumberToString(count);
 			count = 0;
 		}
 		else if (combPig == 0)
 		{
-			if (combination != *base)
-			{
-				count++;
-			}
+			count++;
 			result += l->NumberToString(count);
-			if (expNr > 0)
-			{
-				for (size_t i = 0; i < expNr; i++)
-				{
-					result += l->NumberToString(0);
-				}
-			}
 			break;
 		}
 	}
