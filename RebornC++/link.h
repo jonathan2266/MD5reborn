@@ -13,7 +13,7 @@ public:
 	int StringToNumber(char letter);
 
 private:
-	int indexLenght = 63;
+	int indexLenght = 64;
 };
 
 #endif // !LINK_H.

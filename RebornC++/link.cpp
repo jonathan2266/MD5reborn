@@ -16,7 +16,6 @@ int * link::GetIndexLenght()
 }
 std::string link::NumberToString(int i)
 {
-	i++;
 	switch (i)
 	{
 	case 1:
@@ -408,10 +407,8 @@ int link::StringToNumber(char letter)
 		temp = 63;
 		break;
 	default:
-		temp = 1;
+		temp = 0;
 		break;
 	}
-
-	temp--;
 	return temp;
 }
