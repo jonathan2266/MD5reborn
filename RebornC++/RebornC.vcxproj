@@ -160,6 +160,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="threadManager.cpp" />
     <ClCompile Include="wordGenerator.cpp" />
+    <ClCompile Include="wordJumper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dataChecker.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="link.h" />
     <ClInclude Include="threadManager.h" />
     <ClInclude Include="wordGenerator.h" />
+    <ClInclude Include="wordJumper.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="linuxCompile.txt" />

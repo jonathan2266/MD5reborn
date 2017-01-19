@@ -74,6 +74,8 @@ int main(int argc, char* argv[]) {
 
 	tManager->Start();
 
-	char lol[50];
-	std::cin >> lol;
+	//char lol[50];
+	//std::cin >> lol;
+
+	return 0;
 }
