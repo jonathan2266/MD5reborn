@@ -6,6 +6,7 @@
 #include "hashMD5.h"
 #include "hasher.h"
 #include "hashSHA256.h"
+#include "hashSHA512.h"
 #include "dataChecker.h"
 #include "dataCheckerLocalHDD.h"
 #include "threadManager.h"
@@ -40,6 +41,10 @@ int main(int argc, char* argv[]) {
 	else if (hashType == "SHA256")
 	{
 		hashh = new hashSHA256();
+	}
+	else if (hashType == "SHA512")
+	{
+		hashh = new hashSHA512();
 	}
 	else
 	{
