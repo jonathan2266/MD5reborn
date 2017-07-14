@@ -30,7 +30,7 @@ C++ requires extra binaries. openSSL (1.1.0c) and boost (1.63.0)
 ### current arguments
 
 - arg0: [Path] : D:\\test\
-- argN: [Path] : E:\\extra\drive\  You can add as many dives as you like.
+- argN: [Path] : E:\\extra\drive\  You can add as many drives as you like.
 - argN+1: [HashAlgoritm] : MD5 : SHA256 : SHA512
 
 ## Why
